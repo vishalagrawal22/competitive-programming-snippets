@@ -1,0 +1,13 @@
+<snippet>
+  <content><![CDATA[
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+int rnd(int l, int r)
+{
+    return uniform_int_distribution<int>(l, r)(rng);
+}
+]]></content>
+  <tabTrigger>random</tabTrigger>
+  <description>function which returns a random number in a range.</description>
+  <scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,47 @@
+<snippet>
+  <content><![CDATA[
+vector<vector<int>> multiply(vector<vector<int>> A, vector<vector<int>> B)
+{
+    int N = A.size();
+    vector<vector<int>> ans(N, vector<int>(N, 0));
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            for (int k = 0; k < N; k++)
+            {
+                ans[i][j] += ((A[i][k] % mod) * (B[k][j] % mod)) % mod;
+                ans[i][j] = ans[i][j] % mod;
+            }
+        }
+    }
+    return ans;
+}
+
+vector<vector<int>> power(vector<vector<int>> A, int y)
+{
+    int N = A.size();
+    vector<vector<int>> res(N, vector<int>(N, 0));
+    int k = 0;
+    for (int i = 0; i < N; i++)
+    {
+        res[i][k] = 1;
+        k++;
+    }
+
+    while (y > 0)
+    {
+        if (y & 1)
+        {
+            res = multiply(res, A);
+        }
+        A = multiply(A, A);
+        y = y >> 1;
+    }
+    return res;
+}
+]]></content>
+  <tabTrigger>matrix exponentiation</tabTrigger>
+  <description>Matrix Exponentiation</description>
+  <scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,148 @@
+<snippet>
+  <content><![CDATA[
+#include "bits/stdc++.h"
+
+using big = long long;
+using ld = long double;
+const char nl = '\n';
+#define all(x) (x).begin(), (x).end()
+#define precise(x) \
+    fixed << setprecision(x)
+#define set_bit_count(x) __builtin_popcountll(x)
+#ifdef Haunted_Knight
+#define msg(statement) cerr << statement << endl
+#define dbg(var) cerr << (#var) << ": " << var << endl
+#else
+#define msg(statement)
+#define dbg(var)
+#endif
+
+using namespace std;
+
+template <typename T>
+using min_heap = priority_queue<T, vector<T>, greater<T>>;
+template <typename T>
+using max_heap = priority_queue<T>;
+
+template <typename T>
+ostream &operator<<(ostream &os, min_heap<T> H)
+{
+    while (!H.empty())
+    {
+        os << H.top() << " ";
+        H.pop();
+    }
+    os << endl;
+    return os << "";
+}
+
+template <typename T>
+ostream &operator<<(ostream &os, max_heap<T> H)
+{
+    while (!H.empty())
+    {
+        os << H.top() << " ";
+        H.pop();
+    }
+    os << endl;
+    return os << "";
+}
+
+template <typename F, typename S>
+ostream &operator<<(ostream &os, pair<F, S> P)
+{
+    return os << P.first << " " << P.second;
+}
+
+template <typename T>
+ostream &operator<<(ostream &os, vector<T> arr)
+{
+    for (int i = 0; i < (int)arr.size(); i++)
+    {
+        os << arr[i] << " ";
+    }
+    return os << "";
+}
+
+template <typename T>
+ostream &operator<<(ostream &os, vector<vector<T>> matrix)
+{
+    os << endl;
+    for (int i = 0; i < (int)matrix.size(); i++)
+    {
+        for (int j = 0; j < (int)matrix[i].size(); j++)
+        {
+            os << matrix[i][j] << " ";
+        }
+        os << endl;
+    }
+    return os << "";
+}
+
+template <typename T>
+ostream &operator<<(ostream &os, set<T> S)
+{
+    for (auto s : S)
+    {
+        os << s << " ";
+    }
+    return os << "";
+}
+
+template <typename T>
+ostream &operator<<(ostream &os, multiset<T> S)
+{
+    for (auto s : S)
+    {
+        os << s << " ";
+    }
+    return os << "";
+}
+
+template <typename F, typename S>
+ostream &operator<<(ostream &os, map<F, S> M)
+{
+    os << endl;
+    for (auto m : M)
+    {
+        os << m << endl;
+    }
+    return os << "";
+}
+
+template <typename F, typename S>
+ostream &operator<<(ostream &os, multimap<F, S> M)
+{
+    os << endl;
+    for (auto m : M)
+    {
+        os << m << endl;
+    }
+    return os << "";
+}
+
+void solve()
+{
+    $0
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    // freopen("input.in", "r", stdin);
+    // freopen("output.out", "w", stdout);
+    int no_of_testcases = 1;
+    // $1cin >> no_of_testcases;
+    for (int i = 1; i <= no_of_testcases; i++)
+    {
+        // cout << "Case #" << i << ": ";
+        solve();
+    }
+    return 0;
+}
+]]></content>
+  <tabTrigger>competitive</tabTrigger>
+  <description>Competitive Programming Boiler Plate</description>
+  <scope>source.c++</scope>
+</snippet>

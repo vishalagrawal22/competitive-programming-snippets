@@ -1,0 +1,37 @@
+<snippet>
+  <content><![CDATA[
+const int MAX_PRIMES = 1e5;
+
+vector<int> primes;
+vector<bool> isPrime(MAX_PRIMES + 1, true);
+
+primes.reserve((MAX_PRIMES + 10) / 10);
+isPrime[1] = false;
+
+for (int i = 2; i <= MAX_PRIMES; i++)
+{
+    if (isPrime[i])
+    {
+        primes.push_back(i);
+    }
+
+    for (int j = 0; j < (int)primes.size(); j++)
+    {
+        if (i * primes[j] > MAX_PRIMES)
+        {
+            break;
+        }
+
+        isPrime[i * primes[j]] = false;
+
+        if (i % primes[j] == 0)
+        {
+            break;
+        }
+    }
+}
+]]></content>
+  <tabTrigger>Linear Sieve</tabTrigger>
+  <description>O(N) sieve</description>
+  <scope>source.c++</scope>
+</snippet>

@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+sort(all(${1:array}));
+]]></content>
+  <tabTrigger>sort</tabTrigger>
+  <description>sort vector</description>
+  <scope>source.c++</scope>
+</snippet>

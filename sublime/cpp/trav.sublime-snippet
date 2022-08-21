@@ -1,0 +1,11 @@
+<snippet>
+  <content><![CDATA[
+for (${3:const }auto& ${1:nxt}: ${2:adj[node]})
+{
+    ${0}
+}
+]]></content>
+  <tabTrigger>trav</tabTrigger>
+  <description>traverse a container</description>
+  <scope>source.c++</scope>
+</snippet>

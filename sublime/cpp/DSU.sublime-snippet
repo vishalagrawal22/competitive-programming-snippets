@@ -1,0 +1,58 @@
+<snippet>
+  <content><![CDATA[
+// Tree compression + size(rank) optimised DSU
+class disjoint_sets
+{
+private:
+    int N;
+    vector<int> ancestor;
+    vector<int> children;
+
+public:
+    // Empty Constructor
+    disjoint_sets()
+    {
+        
+    }
+
+    // Constructor
+    disjoint_sets(int size)
+    {
+        N = size;
+        ancestor.resize(N);
+        children.resize(N, 1);
+        iota(all(ancestor), 0);
+    }
+
+    int find_root(int X)
+    {
+        if (ancestor[X] == X)
+        {
+            return X;
+        }
+        ancestor[X] = find_root(ancestor[X]);
+        return ancestor[X];
+    }
+
+    void merge_sets(int X, int Y)
+    {
+        int root_X = find_root(X);
+        int root_Y = find_root(Y);
+        if (root_X == root_Y)
+        {
+            return;
+        }
+        if (children[root_X] > children[root_Y])
+        {
+            swap(root_X, root_Y);
+        }
+        ancestor[root_X] = root_Y;
+        children[root_Y] += children[root_X];
+        children[root_X] = 0;
+    }
+};
+]]></content>
+  <tabTrigger>DSU</tabTrigger>
+  <description>Disjoint Sets Union Class</description>
+  <scope>source.c++</scope>
+</snippet>

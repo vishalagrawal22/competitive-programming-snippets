@@ -1,0 +1,28 @@
+<snippet>
+  <content><![CDATA[
+struct prefix_sum
+{
+    int n;
+    vector<int> prefix;
+
+    prefix_sum()
+    {
+    }
+
+    prefix_sum(vector<int> arr)
+    {
+        n = arr.size();
+        prefix.resize(n);
+        partial_sum(all(arr), prefix.begin());
+    }
+
+    int query(int l, int r)
+    {
+        return prefix[r] - ((l != 0) ? prefix[l - 1] : 0);
+    }
+};
+]]></content>
+  <tabTrigger>Static Sum</tabTrigger>
+  <description>Prefix Sum</description>
+  <scope>source.c++</scope>
+</snippet>

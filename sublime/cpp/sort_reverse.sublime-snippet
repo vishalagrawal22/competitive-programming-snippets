@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+sort(all(${1:array}), greater<${2:int}>());
+]]></content>
+  <tabTrigger>sort reverse</tabTrigger>
+  <description>sort vector reverse</description>
+  <scope>source.c++</scope>
+</snippet>

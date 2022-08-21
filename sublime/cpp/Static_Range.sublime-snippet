@@ -1,0 +1,73 @@
+<snippet>
+  <content><![CDATA[
+struct sparse_table
+{
+    int N;
+    int max_power;
+    ${1:int} def_val;
+    vector<int> log_value;
+    vector<vector<${1:int}>> table;
+
+    ${1:int} merge_nodes(${1:int} left, ${1:int} right)
+    {
+        ${0}
+    }
+
+    sparse_table()
+    {
+        
+    }
+
+    void precompute_logs()
+    {
+        log_value[0] = -1e9;
+        log_value[1] = 0;
+        for (int i = 2; i <= N; i++)
+        {
+            log_value[i] = log_value[i / 2] + 1;
+        }
+    }
+
+    sparse_table(vector<${1:int}> &elements, ${1:int} val)
+    {
+        N = elements.size();
+        max_power = (int)floor(log2((int)elements.size()));
+        def_val = val;
+        log_value.resize(N + 1, 0);
+        table.resize(N, vector<${1:int}>(max_power + 1, val));
+        precompute_logs();
+        build(elements);
+    }
+
+    void build(vector<${1:int}> &elements)
+    {
+        for (int i = 0; i < N; i++)
+        {
+            table[i][0] = elements[i];
+        }
+
+        for (int j = 1; j <= max_power; j++)
+        {
+            for (int i = 0; i < N; i++)
+            {
+                if (i + (1 << j) - 1 >= N)
+                {
+                    break;
+                }
+                table[i][j] = merge_nodes(table[i][j - 1], table[i + (1 << (j - 1))][j - 1]);
+            }
+        }
+    }
+
+    ${1:int} query(int l, int r)
+    {
+        int len = r - l + 1;
+        int bit = log_value[len];
+        return merge_nodes(table[l][bit], table[r - (1 << bit) + 1][bit]);
+    }
+};
+]]></content>
+  <tabTrigger>Static Range</tabTrigger>
+  <description>Sparse Table</description>
+  <scope>source.c++</scope>
+</snippet>

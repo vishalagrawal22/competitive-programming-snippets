@@ -1,0 +1,21 @@
+<snippet>
+  <content><![CDATA[
+inline int power(int base, int val)
+{
+    int res = 1;
+    while (val > 0)
+    {
+        if ((val & 1))
+        {
+            res = res * base;
+        }
+        base = base * base;
+        val = (val >> 1);
+    }
+    return res;
+}
+]]></content>
+  <tabTrigger>pow</tabTrigger>
+  <description>power function using Binary Exponentiation</description>
+  <scope>source.c++</scope>
+</snippet>

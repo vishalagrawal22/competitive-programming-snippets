@@ -1,0 +1,12 @@
+<snippet>
+  <content><![CDATA[
+vector<int> ${1:arr}(${2:length});
+for (int ${3:iter} = 0; ${3:iter} < ${2:length}; ${3:iter}++)
+{
+    cin >> ${1:arr}[${3:iter}];
+}
+]]></content>
+  <tabTrigger>Input Vector</tabTrigger>
+  <description>Input Vector</description>
+  <scope>source.c++</scope>
+</snippet>

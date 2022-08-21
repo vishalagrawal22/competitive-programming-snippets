@@ -1,0 +1,13 @@
+<snippet>
+  <content><![CDATA[
+sort(all(av));
+vector<int> uv(av.begin(), unique(all(av)));
+auto compress = [&](int num) -> int 
+{
+    return lower_bound(all(uv), num) - uv.begin() + 1;
+};
+]]></content>
+  <tabTrigger>Index Compression</tabTrigger>
+  <description>Index Compression</description>
+  <scope>source.c++</scope>
+</snippet>

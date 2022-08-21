@@ -1,0 +1,150 @@
+<snippet>
+  <content><![CDATA[
+struct lazy_tree
+{
+    int n, def_val;
+    pair<int, int> def_lazy;
+    vector<int> tree;
+    vector<pair<bool, int>> lazy;
+
+    // Empty Constructor
+    lazy_tree()
+    {
+    }
+
+    // Initialize by array
+    lazy_tree(vector<int> &leafs, int val, pair<int, int> lazy_val = {1, 0})
+    {
+        def_lazy = lazy_val;
+        def_val = val;
+        n = (1LL << (int)ceill(log2((int)leafs.size())));
+
+        tree.resize(2 * n, def_val);
+        lazy.resize(2 * n, def_lazy);
+        for (int i = 0; i < (int)leafs.size(); i++)
+        {
+            tree[n + i] = leafs[i];
+        }
+
+        build_inner(1);
+    }
+
+    // Initialize by size
+    lazy_tree(int len, int val, pair<int, int> lazy_val = {1, 0})
+    {
+        def_lazy = lazy_val;
+        def_val = val;
+        n = (1LL << (int)ceill(log2(len)));
+
+        tree.resize(2 * n, def_val);
+        lazy.resize(2 * n, def_lazy);
+
+        build_inner(1);
+    }
+
+    inline int merge_nodes(int left, int right)
+    {
+        return left + right;
+    }
+
+    inline int get_value(int node, int children)
+    {
+        return (tree[node] * lazy[node].first + children * lazy[node].second);
+    }
+
+    inline int query(int l, int r)
+    {
+        return query_inner(1, 0, n - 1, l, r);
+    }
+
+    inline int add(int l, int r, int val)
+    {
+        return update_inner(1, 0, n - 1, l, r, 1, val);
+    }
+
+    inline int assign(int l, int r, int val)
+    {
+        return update_inner(1, 0, n - 1, l, r, 0, val);
+    }
+
+private:
+    inline void update_lazy_value(int node, bool type, int val)
+    {
+        if (node >= n)
+        {
+            tree[node] = tree[node] * type + val;
+            return;
+        }
+
+        if (type)
+        {
+            lazy[node].second += val;
+        }
+        else
+        {
+            lazy[node].first = type;
+            lazy[node].second = val;
+        }
+    }
+
+    inline void push_lazy_value(int node, int children)
+    {
+        update_lazy_value((node << 1), lazy[node].first, lazy[node].second);
+        update_lazy_value((node << 1) + 1, lazy[node].first, lazy[node].second);
+        tree[node] = get_value(node, children);
+        lazy[node] = def_lazy;
+    }
+
+    int build_inner(int node)
+    {
+        if (node >= n)
+        {
+            return tree[node];
+        }
+        tree[node] = merge_nodes(build_inner((node << 1)), build_inner((node << 1) + 1));
+        return tree[node];
+    }
+
+    int query_inner(int node, int node_l, int node_r, int query_l, int query_r)
+    {
+        if (query_l <= node_l && node_r <= query_r)
+        {
+            return get_value(node, (node_r - node_l + 1));
+        }
+        else if (query_l > node_r || query_r < node_l)
+        {
+            return def_val;
+        }
+        else
+        {
+            push_lazy_value(node, node_r - node_l + 1);
+            int mid = (node_l + node_r) >> 1;
+            return merge_nodes(query_inner((node << 1), node_l, mid, query_l, query_r), query_inner((node << 1) + 1, mid + 1, node_r, query_l, query_r));
+        }
+    }
+
+    int update_inner(int node, int node_l, int node_r, int query_l, int query_r, int type, int value)
+    {
+        if (query_l <= node_l && node_r <= query_r)
+        {
+            update_lazy_value(node, type, value);
+            return get_value(node, node_r - node_l + 1);
+        }
+        else if (query_l > node_r || query_r < node_l)
+        {
+            return get_value(node, node_r - node_l + 1);
+        }
+        else
+        {
+            push_lazy_value(node, node_r - node_l + 1);
+            int mid = (node_l + node_r) >> 1;
+            tree[node] = merge_nodes(update_inner((node << 1), node_l, mid, query_l, query_r, type, value), update_inner((node << 1) + 1, mid + 1, node_r, query_l, query_r, type, value));
+            return tree[node];
+        }
+    }
+};
+]]></content>
+  <tabTrigger>Lazy Range</tabTrigger>
+  <description>Lazy Segment Tree</description>
+  <scope>source.c++</scope>
+</snippet>

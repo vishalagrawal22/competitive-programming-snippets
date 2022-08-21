@@ -1,0 +1,11 @@
+<snippet>
+  <content><![CDATA[
+for (int ${1:iter} = 1; ${1:iter} <= (int)${2:length}; ${1:iter}++)
+{
+    $0
+}
+]]></content>
+  <tabTrigger>for 1-based </tabTrigger>
+  <description>1-based for</description>
+  <scope>source.c++</scope>
+</snippet>

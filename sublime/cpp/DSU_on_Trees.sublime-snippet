@@ -1,0 +1,74 @@
+<snippet>
+  <content><![CDATA[
+const int max_n = 5e5 + 10;
+vector<vector<int>> adj;
+int vals[max_n];
+int sz[max_n];
+int heavy = -1;
+
+int sack_size(int node, int parent = 0)
+{
+    sz[node] = 1;
+    int max_sz = 0;
+    for (int i = 0; i < (int)adj[node].size(); i++)
+    {
+        if (adj[node][i] == parent)
+        {
+            continue;
+        }
+        int temp = sack_size(adj[node][i], node);
+        sz[node] += temp;
+        if (temp > max_sz)
+        {
+            max_sz = temp;
+            swap(adj[node][0], adj[node][i]);
+        }
+    }
+    return sz[node];
+}
+
+void sack_add(int node, int parent)
+{
+    // Do Something Here to change the value
+    for (int i = 0; i < (int)adj[node].size(); i++)
+    {
+        if (adj[node][i] != parent && adj[node][i] != heavy)
+        {
+            sack_add(adj[node][i], node);
+        }
+    }
+}
+
+void sack_dfs(int node, int parent, int keep)
+{
+    for (int i = 1; i < (int)adj[node].size(); i++)
+    {
+        if (adj[node][i] != parent)
+        {
+            sack_dfs(adj[node][i], node, 0);
+        }
+    }
+
+    if (sz[node] != 1)
+    {
+        sack_dfs(adj[node][0], node, 1);
+        heavy = adj[node][0];
+    }
+
+    sack_add(node, parent);
+
+    // Handle root seperately if you are going 
+    // to dfs only on the light childs
+    // Answer Queries Here
+
+    heavy = -1;
+    if (!keep)
+    {
+        sack_add(node, parent);
+    }
+}
+]]></content>
+  <tabTrigger>DSU on Trees</tabTrigger>
+  <description></description>
+  <scope>source.c++</scope>
+</snippet>

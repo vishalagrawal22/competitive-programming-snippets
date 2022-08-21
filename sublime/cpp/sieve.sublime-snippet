@@ -1,0 +1,47 @@
+<snippet>
+  <content><![CDATA[
+const int MAX_LIMIT = ${1:1e7};
+vector<int> primes;
+vector<int> spf;
+vector<bool> isPrime;
+
+void sieve()
+{
+    primes.reserve(MAX_LIMIT / 10);
+    isPrime.resize(MAX_LIMIT + 1, true);
+    spf.resize(MAX_LIMIT + 1);
+
+    isPrime[1] = false;
+    iota(all(spf), 0);
+
+    for (int i = 2; i <= MAX_LIMIT; i++)
+    {
+        if (isPrime[i])
+        {
+            primes.push_back(i);
+            for (int j = i * i; j <= MAX_LIMIT; j += i)
+            {
+                if (isPrime[j])
+                {
+                    isPrime[j] = false;
+                    spf[j] = i;
+                }
+            }
+        }
+    }
+}
+
+void get_factors(int num, vector<int>& factors)
+{
+    factors.reserve(log2(num) + 1);
+    while (num != 1)
+    {
+        factors.push_back(spf[num]);
+        num /= spf[num];
+    }
+}
+]]></content>
+  <tabTrigger>sieve</tabTrigger>
+  <description>sieve template</description>
+  <scope>source.c++</scope>
+</snippet>

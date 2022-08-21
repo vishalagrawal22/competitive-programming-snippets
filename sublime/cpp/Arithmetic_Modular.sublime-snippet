@@ -1,0 +1,63 @@
+<snippet>
+  <content><![CDATA[
+const int mod = 1e9 + 7;
+// const int mod = 998244353;
+
+inline int add(int val1, int val2) 
+{
+    int ans = val1 + val2;
+    if (ans >= mod)
+    {
+        ans -= mod;
+    }
+    return ans;
+}
+
+inline int sub(int val1, int val2) 
+{
+    int ans = val1 - val2;
+    if (ans < 0)
+    {
+        ans += mod;
+    }
+    return ans;
+}
+
+inline int mult(int val1, int val2) 
+{
+    int ans = (val1 * 1LL * val2) % mod;
+    return ans;
+}
+
+int power(int base, int val)
+{
+    base = base % mod;
+    int res = 1;
+    while (val > 0)
+    {
+        if ((val & 1))
+        {
+            res = mult(res, base);
+        }
+        base = mult(base, base);
+        val = (val >> 1);
+    }
+    return res;
+}
+
+int modInverse(int num)
+{
+    return power(num, mod - 2);
+}
+
+int divide(int val1, int val2)
+{
+    int val3 = modInverse(val2);
+    int ans = mult(val1, val3);
+    return ans;
+}
+]]></content>
+  <tabTrigger>Arithmetic Modular</tabTrigger>
+  <description>Modular Arithmetic</description>
+  <scope>source.c++</scope>
+</snippet>

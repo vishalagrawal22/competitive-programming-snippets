@@ -1,0 +1,82 @@
+<snippet>
+  <content><![CDATA[
+struct centroid_decomposition
+{
+    // centroid tree data
+    int root;
+    vector<vector<int>> tree;
+    vector<int> parent;
+
+    // original tree data
+    vector<vector<int>> og_tree;
+    vector<int> sz;
+    vector<bool> vis;
+
+    centroid_decomposition(vector<vector<int>> &adj)
+    {
+        int n = adj.size();
+        og_tree = adj;
+        tree.resize(n);
+        parent.resize(n);
+        sz.resize(n);
+        vis.resize(n);
+
+        build(1, 0);
+    }
+
+    int dfs_size(int node, int par)
+    {
+        sz[node] = 1;
+        for (const auto &nxt : og_tree[node])
+        {
+            if (nxt != par && !vis[nxt])
+            {
+                sz[node] += dfs_size(nxt, node);
+            }
+        }
+        return sz[node];
+    }
+
+    int get_centroid(int node, int par, int max_sz)
+    {
+        for (const auto &nxt : og_tree[node])
+        {
+            if (!vis[nxt] && nxt != par && sz[nxt] > max_sz / 2)
+            {
+                return get_centroid(nxt, node, max_sz);
+            }
+        }
+        return node;
+    }
+
+    void build(int node, int par)
+    {
+        dfs_size(node, par);
+        int centroid = get_centroid(node, par, sz[node]);
+        vis[centroid] = 1;
+
+        parent[centroid] = par;
+        if (par != 0)
+        {
+            tree[centroid].push_back(par);
+            tree[par].push_back(centroid);
+        }
+        else
+        {
+            root = centroid;
+        }
+
+        for (const auto &nxt : og_tree[centroid])
+        {
+            if (!vis[nxt])
+            {
+                build(nxt, centroid);
+            }
+        }
+    }
+};
+]]></content>
+  <tabTrigger>Decomposition Centroid </tabTrigger>
+  <description>Centroid Decomposition of Tree</description>
+  <scope>source.c++</scope>
+</snippet>
